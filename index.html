@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
     <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css"/>
     <title>.:: Weather Dashboard ::.</title>
   </head>
@@ -22,13 +23,39 @@
 
     <main class="container">
         <section class="row">
-            <section class="col-lg-12">
-                <!-- Timeblocks go here -->
+            <section class="col-lg-4 bg-secondary">
+                <section class="input-space">
+                    <label for="searchInput">Search for a city :</label>
+                    <section class="input-group mb-3">
+                        <input id="email" type="text" class="form-control" name="searchInput" placeholder="City name">
+                        <span class="input-group-btn">
+                            <button type="button" id="searchButton" class="btn btn-primary"><img class="img-responsive d-block my-auto py-0" src="./Assets/search.png" alt="Search"/></button>
+                        </span>    
+                    </section>  
+                </section>
 
+                <section id="citiesArea" class="btn-group-vertical btn-block">
+                        <!-- Cities goes here go here up to 5-->
+                        <!-- this how the button will look like from the local storage -->
+                        <button type="button" class="btn btn-primary m-1">Warsaw</button>                    
+                </section>
+
+            </section>
+            <section class="col-lg-8">
+
+                <!-- Weather goes here -->
+                <textarea id="currentWeather" class="form-control rounded-0 mt-2" rows="5">
+
+                </textarea>
+                
+                <textarea id="nextdaysWeather" class="form-control rounded-0 mt-2" rows="3">
+
+                </textarea>            
             </section>
         </section>
     </main>
 
+    
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="./script.js"></script>
