@@ -29,15 +29,16 @@ function frenderWeather(city){
     const urlApi = 'http://api.openweathermap.org/data/2.5/forecast?';
     let cityQuery = 'q=' + city;
     let apiQuery = '&appid=' + apiKey;
+    let unitsQuery = '&units=metric';
 
     //api.openweathermap.org/data/2.5/weather?q={city name}&appid={your api key}
-    let queryUrl = urlApi + cityQuery + apiQuery;
+    let queryUrl = urlApi + cityQuery + apiQuery + unitsQuery;
        
     // make API call
     $.ajax({
             url: queryUrl,
             method: 'GET',
-            success: function(weatherResponse){
+            success: function(response){
 
             // Update DOM
             // create DOM if it doesn't exists
@@ -60,13 +61,21 @@ function frenderWeather(city){
 
             // add event listener to buttons with class city
             $(".city").off().on( "click", function() {
-                event.stopPropagation();
                 event.preventDefault();
-                console.log( "clicked on", jQuery(this), "which has id", jQuery(this).attr('id') );
-            });
 
-                // display weather
-                console.log(weatherResponse);       
+
+            });
+            
+            console.log(response);
+                // display weather for today
+                let today= [ response.city.name, response.list[0].main.temp, response.list[0].main.temp, response.list[0].main.humidity,  response.list[0].wind.speed ];
+                console.log(today); 
+
+
+
+                // display weather for the next days
+
+               // console.log(weatherResponse);       
             },
             error: function(){
                 // write to console
@@ -89,13 +98,8 @@ $("#searchButton").on( "click", function() {
         console.log("Empty city !!!");
 
     } else {
-        frenderWeather(city);
-        
+        frenderWeather(city);  
     }
 });
-
-
-
-
 
 })
