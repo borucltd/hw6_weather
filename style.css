@@ -3,11 +3,20 @@ h1 {
     font-size: 6vh;
 }
 
+.city {
+    font-family: 'Ubuntu', sans-serif;
+}
+
 img {
     width: 3vw;
     height: 3vh;
 }
 
+
+body.wait *, body.wait
+{
+    cursor: progress !important;
+}
 
 
 
