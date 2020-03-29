@@ -1,5 +1,5 @@
 $(document).ready(function () {
-              
+      
 // Really cool stuff to change cursor when running API ajax calls
 $(document).ajaxStart(function ()
 {
@@ -11,12 +11,10 @@ $(document).ajaxStart(function ()
 
 });
 
-
-
-
 // Local Storage
 // Check if it is defined
 let lastSearch = localStorage.getItem('lastCity');
+
 if (lastSearch === null ) {
     console.log("Local storage not initiated.");
 } else {
@@ -37,60 +35,65 @@ function frenderWeather(city){
        
     // make API call
     $.ajax({
-                url: queryUrl,
-                method: 'GET',
-                success: function(weatherResponse){
-                    // when we have successful response
-                    // create DOM if it doesn't exists
-                    if ($('#button'+city).length === 0) {
+            url: queryUrl,
+            method: 'GET',
+            success: function(weatherResponse){
 
-                        // new button for the city
-                        // each button has ID = btncity
-                        // each button has CUSTOM class city used later
-                        let newButton = $('<button>');
-                        newButton.attr('id', "btn"+city);
-                        newButton.attr('type', 'button');
-                        newButton.addClass('btn btn-primary m-1 city');
-                        
-                        newButton.text(city);
+            // Update DOM
+            // create DOM if it doesn't exists
+            if ($('#button'+city).length === 0) {
 
-                        // add button to citiesArea
-                        $("#citiesArea").append(newButton);
+            let newButton = $('<button>');
+            newButton.attr('id', "btn"+city);
+            newButton.attr('type', 'button');
+            newButton.addClass('btn btn-primary m-1 city');
+            newButton.text(city);
 
-                        // add city to local storage
-                        localStorage.setItem('lastCity',city);                    }
+            // add button to citiesArea
+            $("#citiesArea").append(newButton);
 
-                        // display weather
-                        console.log(weatherResponse);
+            // add city to local storage as last
+            localStorage.setItem('lastCity',city);                    }
+                  
+            // make API call
+            //frenderWeather(city);    
 
-                        // add event listener to buttons with class city
-                        $(".city").on( "click", function() {
-                            console.log("Running API");
-                        });
-                },
-                error: function(){
-                    console.log("API call: something went wrong.");
-                }
-
+            // add event listener to buttons with class city
+            $(".city").off().on( "click", function() {
+                event.stopPropagation();
+                event.preventDefault();
+                console.log( "clicked on", jQuery(this), "which has id", jQuery(this).attr('id') );
             });
+
+                // display weather
+                console.log(weatherResponse);       
+            },
+            error: function(){
+                // write to console
+                console.log("API call: something went wrong.");
+            }
+    });
             
 }
 
-
-// Add city to history 
-// each save button  on click saves to local storage
+// When search is clicked
 $("#searchButton").on( "click", function() {
+    event.preventDefault();
     // Read city name
     let city = $("#searchCity").val();
 
+    // if city is empty we do nothing
     if (city === "" ) {
+
         // We don't want to make API calls which will not work 100%
-        console.log("EMPTY !!!");
+        console.log("Empty city !!!");
+
     } else {
-        // make API call
-        frenderWeather(city);       
+        frenderWeather(city);
+        
     }
 });
+
 
 
 
