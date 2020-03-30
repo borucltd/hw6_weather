@@ -1,5 +1,7 @@
 $(document).ready(function () {
-      
+
+
+
 // Really cool stuff to change cursor when running API ajax calls
 $(document).ajaxStart(function ()
 {
@@ -30,6 +32,7 @@ function frenderWeather(city){
     let cityQuery = 'q=' + city;
     let apiQuery = '&appid=' + apiKey;
     let unitsQuery = '&units=metric';
+    
 
     //api.openweathermap.org/data/2.5/weather?q={city name}&appid={your api key}
     let queryUrl = urlApi + cityQuery + apiQuery + unitsQuery;
@@ -56,26 +59,103 @@ function frenderWeather(city){
             // add city to local storage as last
             localStorage.setItem('lastCity',city);                    }
                   
-            // make API call
-            //frenderWeather(city);    
-
             // add event listener to buttons with class city
             $(".city").off().on( "click", function() {
                 event.preventDefault();
+
+                console.log($(this).text());
+
+                // make API call
+                //frenderWeather(city); 
 
 
             });
             
             console.log(response);
-                // display weather for today
-                let today= [ response.city.name, response.list[0].main.temp, response.list[0].main.temp, response.list[0].main.humidity,  response.list[0].wind.speed ];
-                console.log(today); 
+           
+           
+            // display weather
+            let cityName = response.city.name;
+            let hour = ' 15:00:00';
+            let timeshift = 5400; // seconds, difference between GMT and Adelaide
+            let today = moment().format('YYYY-MM-DD');
+            // here we will have 6 unix timestamps for 6 days
+            // each timestamp is for 3 PM
+            let timestamps = [];
+            let day;
+            
+
+            for (let i = 0; i<6; i ++){
+                day = moment().add(i,'days').format('YYYY-MM-DD') + hour;
+                timestamps[i] = moment(day).unix() + timeshift;
+
+                // today
+                if (i===0) {
+                    // remove child elements
+                    $("#todayWeather").empty();
+
+                    let todayHeader = $("<h2>");
+                    let todayTemperature = $("<p>");
+                    let todayHumidity = $("<p>");
+                    let todayWind = $("<p>");
+                    let todayUV = $("<p>");
+
+                    todayHeader.text(cityName + " " + moment.unix(timestamps[i]).format('DD/MM/YYYY'));
+                    todayTemperature.text("Temperature:");
+                    todayHumidity.text("Humidity:");
+                    todayWind.text("Wind:");
+                    todayUV.text("UV:");
+
+                    for (let j = 0; j < response.cnt; j++) 
+                    {
+                        console.log(response.list[j].dt + "=== " + timestamps[i]);
+                        if (response.list[j].dt === timestamps[i]) {
+                            console.log("HERRE");
+                            todayTemperature.text("Temperature: " + response.list[j].main.temp + " C");
+                            todayHumidity.text("Humidity: " + response.list[j].main.humidity + " %");
+                            todayWind.text("Wind: " + response.list[j].wind.speed + " mps " );
+                            todayUV.text("UV: ");
+                            break
+
+                        }
+                    }
+                    
+                  
+                    
+                    
+                    $("#todayWeather").append(todayHeader);
+                    $("#todayWeather").append(todayTemperature);
+                    $("#todayWeather").append(todayHumidity);
+                    $("#todayWeather").append(todayWind);
+                    $("#todayWeather").append(todayUV);
+
+                } else {
+                    // next days
+                    // date, temp, humidity
+                    console.log(timestamps[i]);
+
+                }
+
+            }
+        
+
+            
+       
+
+            //                city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
+           // let today= [    response.city.name,  //city name
+              //              response.list[0].dt, // date 
+                //            response.list[0].main.temp, // temperature
+                  //          response.list[0].main.humidity, // humidity
+                    //        response.list[0].wind.speed ]; // wind speed
+
+            console.log(today); 
 
 
 
-                // display weather for the next days
+            // display weather for the next days
 
-               // console.log(weatherResponse);       
+            // console.log(weatherResponse);       
             },
             error: function(){
                 // write to console
