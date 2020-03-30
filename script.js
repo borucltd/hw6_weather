@@ -148,7 +148,7 @@ function frenderWeather(city){
                     nextdaySection.append(nextdayDate);
                     nextdaySection.append(nextdayTemperature);
                     nextdaySection.append(nextdayHumidity);
-                    nextdaySection.addClass("bg-info col-xs-1 mx-2");
+                    nextdaySection.addClass("bg-info col-xs-1 mx-3 my-2");
                     $("#nextDaysWeather").append(nextdaySection);
 
                 }
