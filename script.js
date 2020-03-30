@@ -111,7 +111,7 @@ function frenderWeather(city){
                         console.log(response.list[j].dt + "=== " + timestamps[i]);
                         if (response.list[j].dt === timestamps[i]) {
                             console.log("HERRE");
-                            todayTemperature.text("Temperature: " + response.list[j].main.temp + " C");
+                            todayTemperature.text("Temp.: " + response.list[j].main.temp +   String.fromCharCode(176) + "C");
                             todayHumidity.text("Humidity: " + response.list[j].main.humidity + " %");
                             todayWind.text("Wind: " + response.list[j].wind.speed + " mps " );
                             todayUV.text("UV: ");
@@ -131,25 +131,30 @@ function frenderWeather(city){
 
                 } else {
                     // next days
+                    if (i === 1) {
+                        $("#nextDaysWeather").empty();
+                    }
+                   
                     // date, temp, humidity
-                    console.log(timestamps[i]);
+                    let nextdaySection = $("<section>");
+                    let nextdayDate = $("<p>");
+                    let nextdayTemperature = $("<p>");
+                    let nextdayHumidity = $("<p>");
+
+                    nextdayDate.text(moment.unix(timestamps[i]).format('DD/MM/YYYY'));
+                    nextdayTemperature.text("Temp.: " + response.list[i].main.temp +  String.fromCharCode(176) + "C");
+                    nextdayHumidity.text("Humidity: " + response.list[i].main.humidity + " %");
+
+                    nextdaySection.append(nextdayDate);
+                    nextdaySection.append(nextdayTemperature);
+                    nextdaySection.append(nextdayHumidity);
+                    nextdaySection.addClass("bg-info col-xs-1 mx-2");
+                    $("#nextDaysWeather").append(nextdaySection);
 
                 }
 
             }
         
-
-            
-       
-
-            //                city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
-           // let today= [    response.city.name,  //city name
-              //              response.list[0].dt, // date 
-                //            response.list[0].main.temp, // temperature
-                  //          response.list[0].main.humidity, // humidity
-                    //        response.list[0].wind.speed ]; // wind speed
-
-            console.log(today); 
 
 
 
