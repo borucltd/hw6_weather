@@ -30,6 +30,8 @@ function frenderWeather(city,skip){
     // Open Weather API
     const apiKey = 'd6c3151200124f6b3dfdd52227d4e82c';
     const urlApi = 'http://api.openweathermap.org/data/2.5/forecast?';
+    // open weather icons are here .. googled that stackoverflow
+    const urlIcon = 'http://openweathermap.org/img/w/';
     let cityQuery = 'q=' + city;
     let apiQuery = '&appid=' + apiKey;
     let unitsQuery = '&units=metric';
@@ -47,6 +49,7 @@ function frenderWeather(city,skip){
             method: 'GET',
 
             success: function(response) {
+                console.log(response);
                 // Because API call can be triggered by clicking search button
                 // or button with the city name
                 // we need to check when we add new button                
@@ -107,9 +110,11 @@ function frenderWeather(city,skip){
                     let todayTemperature = $("<p>");
                     let todayHumidity = $("<p>");
                     let todayWind = $("<p>");
+                    let todayIcon = $("<img>");
+                
                    
 
-                    todayHeader.text(cityName + " " + timestamps[i]);
+                    
                     // response.cnt is the number of results from API
                     // by default this is 40
                     // we need to find result for our timestamp
@@ -117,9 +122,12 @@ function frenderWeather(city,skip){
                     {
                         // responde.X.dt is timestamp in GMT
                         // timestamp is timestamp in GMT
-                        console.log(response.list[j].dt_txt + " ===  " + timestamps[i]);
                         if (response.list[j].dt_txt === timestamps[i]) {
+
                             
+                            todayIcon.attr("src", urlIcon + response.list[j].weather[0].icon + ".png"  );
+                            todayIcon.addClass("img-responsive icon");
+                            todayHeader.text(cityName + " " + timestamps[i]);
                             todayTemperature.text("Temperature: " + response.list[j].main.temp +   String.fromCharCode(176) + "C");
                             todayHumidity.text("Humidity: " + response.list[j].main.humidity + " %");
                             todayWind.text("Wind: " + response.list[j].wind.speed + " mps " );
@@ -130,6 +138,7 @@ function frenderWeather(city,skip){
                             console.log(response.city.coord.lon);
                             console.log(timeUV);
                             $("#todayWeather").append(todayHeader);
+                            $("#todayWeather").append(todayIcon);
                             $("#todayWeather").append(todayTemperature);
                             $("#todayWeather").append(todayHumidity);
                             $("#todayWeather").append(todayWind);
@@ -155,12 +164,17 @@ function frenderWeather(city,skip){
                     let nextdayDate = $("<p>");
                     let nextdayTemperature = $("<p>");
                     let nextdayHumidity = $("<p>");
+                    let ndayIcon = $("<img>");
+
+                    ndayIcon.attr("src", urlIcon + response.list[i].weather[0].icon + ".png"  );
+                    ndayIcon.addClass("img-responsive nicon");
 
                     nextdayDate.text(timestamps[i].split(" ",1));
                     nextdayTemperature.text("Temp.: " + response.list[i].main.temp +  String.fromCharCode(176) + "C");
                     nextdayHumidity.text("Humidity: " + response.list[i].main.humidity + " %");
 
                     nextdaySection.append(nextdayDate);
+                    nextdaySection.append(ndayIcon);
                     nextdaySection.append(nextdayTemperature);
                     nextdaySection.append(nextdayHumidity);
                     nextdaySection.addClass("bg-info col-xs-1 mx-3 my-2");
@@ -237,10 +251,6 @@ function getUV(lat,lng,dt) {
             $("#todayWeather").append(todayUV);
         }
     });
-
-
-   
-
     
 }
 

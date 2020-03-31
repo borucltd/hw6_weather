@@ -12,6 +12,16 @@ img {
     height: 3vh;
 }
 
+img.icon {
+    width: 5vw;
+    height: 10vh;
+}
+
+img.nicon {
+    width: 2vw;
+    height: 5vh;
+}
+
 /* class is needed to render busy cursos during ajax calls */
 body.wait *, body.wait
 {
