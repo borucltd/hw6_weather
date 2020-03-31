@@ -1,0 +1,18 @@
+
+425e3c6163a054cb405d72054e8120a5
+
+$.ajax({
+   type: 'GET',
+   dataType: 'json',
+   beforeSend: function(request) {
+     request.setRequestHeader('x-access-token', '425e3c6163a054cb405d72054e8120a5');
+   },
+   url: 'https://api.openuv.io/api/v1/uv?lat=' + lat + '&lng=' + lng + '&alt=' + alt + '&ozone=' + ozone + '&dt=' + dt,
+   success: function(response) {
+     //handle successful response
+   },
+   error: function(response) {
+     // handle error response
+   }
+ });
+}
