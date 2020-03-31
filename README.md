@@ -1,55 +1,40 @@
-# 06 Server-Side APIs: Weather Dashboard
+# Weather dashboard
 
-Developers are often tasked with retrieving data from another application's API and using it in the context of their own. Third-party APIs allow developers to access their data and functionality by making requests with specific parameters to a URL. Your challenge is to build a weather dashboard that will run in the browser and feature dynamically updated HTML and CSS.
 
-Use the [OpenWeather API](https://openweathermap.org/api) to retrieve weather data for cities. The documentation includes a section called "How to start" that will provide basic setup and usage instructions. Use `localStorage` to store any persistent data.
+Simple weather dashboard.
 
-## User Story
 
-```
-AS A traveler
-I WANT to see the weather outlook for multiple cities
-SO THAT I can plan a trip accordingly
-```
+## Getting Started
 
-## Acceptance Criteria
 
-```
-GIVEN a weather dashboard with form inputs
-WHEN I search for a city
-THEN I am presented with current and future conditions for that city and that city is added to the search history
-WHEN I view current weather conditions for that city
-THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
-WHEN I view the UV index
-THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe
-WHEN I view future weather conditions for that city
-THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, and the humidity
-WHEN I click on a city in the search history
-THEN I am again presented with current and future conditions for that city
-WHEN I open the weather dashboard
-THEN I am presented with the last searched city forecast
-```
+Open the web browser and weather dashboard will be ready. Type in the name of the city and click search.
+After a while, current weather will be displayed on the right. Below, you will see a 5 day weather forecast.
+Please note, if UV index is marked as N/A that means you have extedned the number of call to UV API (there are maximum 50 per day).
 
-The following image demonstrates the application functionality:
+Your search history will be saved on the left. Once you re-open the web page, the last city will be displayed.
 
-![weather dashboard demo](./Assets/06-server-side-apis-homework-demo.png)
 
-## Review
+If you don't provide the name of the city, the left field will be marked as red.
 
-You are required to submit the following for review:
 
-* The URL of the deployed application.
+## Prerequisities
 
-* The URL of the GitHub repository. Give the repository a unique name and include a README describing the project.
 
-- - -
-© 2019 Trilogy Education Services, a 2U, Inc. brand. All Rights Reserved.
-Write a function that takes in a string and returns true if it's a pangram or false otherwise.
-Pangram: a sentence that contains every letter in the alphabet.
-Ex:
-Input: "Watch Jeopardy, Alex Trebek's fun TV quiz game"
-Output: true
-Input: "Five hexing wizard bots jump quickly"
-Output: true
-Input: "JavaScript is the best"
-Output: false
+You just need a web browser. The project was tested on:
+* desktop Chrome
+* mobile Chrome (fonts are not responsive)
+
+### Example
+
+![example1](./Assets/weather.PNG)
+
+
+### Built with
+
+To build this project I used:
+* static html
+* bootstrap
+* custom css
+* javascript (jQuery) managing DOM
+* local storage
+* two free APIs: https://openweathermap.org/ and https://www.openuv.io/.
