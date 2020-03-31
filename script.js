@@ -222,7 +222,7 @@ $("#searchButton").on( "click", function() {
 function getUV(lat,lng,dt) {
 
     let urlUV = 'https://api.openuv.io/api/v1/uv';
-    let tokenUV = '1c5c77e7762002273011c3361fd25485';
+    let tokenUV = 'ac49f8da44a5ea1c5e8cb00bc2f4c1d1';
     let indexUV;
     let latUV = lat;
     let lngUV = lng;
