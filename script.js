@@ -29,9 +29,9 @@ function frenderWeather(city,skip){
 
     // Open Weather API
     const apiKey = 'd6c3151200124f6b3dfdd52227d4e82c';
-    const urlApi = 'http://api.openweathermap.org/data/2.5/forecast?';
+    const urlApi = 'https://api.openweathermap.org/data/2.5/forecast?';
     // open weather icons are here .. googled that stackoverflow
-    const urlIcon = 'http://openweathermap.org/img/w/';
+    const urlIcon = 'https://openweathermap.org/img/w/';
     let cityQuery = 'q=' + city;
     let apiQuery = '&appid=' + apiKey;
     let unitsQuery = '&units=metric';
