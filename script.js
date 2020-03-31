@@ -1,12 +1,12 @@
 $(document).ready(function () {
 
-
-
-// Really cool stuff to change cursor when running API ajax calls
+// Really cool stuff (googled) to change cursor when running API ajax calls
+// Each time we start ANY ajax call
+// we add class wait to the body
 $(document).ajaxStart(function ()
 {
     $('body').addClass('wait');
-
+// when ajax call finishes, we remove class wait
 }).ajaxComplete(function () {
 
     $('body').removeClass('wait');
@@ -33,7 +33,6 @@ function frenderWeather(city){
     let apiQuery = '&appid=' + apiKey;
     let unitsQuery = '&units=metric';
     
-
     //api.openweathermap.org/data/2.5/weather?q={city name}&appid={your api key}
     let queryUrl = urlApi + cityQuery + apiQuery + unitsQuery;
        
@@ -41,50 +40,50 @@ function frenderWeather(city){
     $.ajax({
             url: queryUrl,
             method: 'GET',
-            success: function(response){
 
-            // Update DOM
-            // create DOM if it doesn't exists
-            if ($('#button'+city).length === 0) {
+            success: function(response) {
+                // Update DOM
+                // create DOM if it doesn't exists
+                console.log($(this).text);
+                if ($('#button'+city).length === 0 ) {
 
-            let newButton = $('<button>');
-            newButton.attr('id', "btn"+city);
-            newButton.attr('type', 'button');
-            newButton.addClass('btn btn-primary m-1 city');
-            newButton.text(city);
+                    let newButton = $('<button>');
+                    newButton.attr('id', "btn"+city);
+                    newButton.attr('type', 'button');
+                    newButton.addClass('btn btn-primary m-1 city');
+                    newButton.text(city);
 
-            // add button to citiesArea
-            $("#citiesArea").append(newButton);
+                    // add button to citiesArea
+                    $("#citiesArea").append(newButton);
 
-            // add city to local storage as last
-            localStorage.setItem('lastCity',city);                    }
-                  
-            // add event listener to buttons with class city
-            $(".city").off().on( "click", function() {
-                event.preventDefault();
+                    // add city to local storage as last
+                    localStorage.setItem('lastCity',city);
+                }    
 
-                console.log($(this).text());
-
-                // make API call
-                //frenderWeather(city); 
-
-
-            });
+                // add event listener to buttons with class city
+                // we use off/on to run this once only
+                // in addition to that we add event.preventDefault
+                // this is becasue we invocate click event per class and not id
+                $(".city").off().on( "click", function() {
+                    event.preventDefault();
+                    // make API call
+                    frenderWeather($(this).text()); 
+                });
             
             console.log(response);
-           
            
             // display weather
             let cityName = response.city.name;
             let hour = ' 15:00:00';
-            let timeshift = 5400; // seconds, difference between GMT and Adelaide
+            // seconds, difference between GMT and Adelaide
+            // I could use timeoffset from the API call but had no power to thing about it...
+            let timeshift = 5400; 
             let today = moment().format('YYYY-MM-DD');
             // here we will have 6 unix timestamps for 6 days
             // each timestamp is for 3 PM
             let timestamps = [];
             let day;
             
-
             for (let i = 0; i<6; i ++){
                 day = moment().add(i,'days').format('YYYY-MM-DD') + hour;
                 timestamps[i] = moment(day).unix() + timeshift;
@@ -108,7 +107,7 @@ function frenderWeather(city){
 
                     for (let j = 0; j < response.cnt; j++) 
                     {
-                        console.log(response.list[j].dt + "=== " + timestamps[i]);
+                        
                         if (response.list[j].dt === timestamps[i]) {
                             console.log("HERRE");
                             todayTemperature.text("Temp.: " + response.list[j].main.temp +   String.fromCharCode(176) + "C");
@@ -118,10 +117,7 @@ function frenderWeather(city){
                             break
 
                         }
-                    }
-                    
-                  
-                    
+                    }                 
                     
                     $("#todayWeather").append(todayHeader);
                     $("#todayWeather").append(todayTemperature);
@@ -154,10 +150,6 @@ function frenderWeather(city){
                 }
 
             }
-        
-
-
-
             // display weather for the next days
 
             // console.log(weatherResponse);       
@@ -178,11 +170,12 @@ $("#searchButton").on( "click", function() {
 
     // if city is empty we do nothing
     if (city === "" ) {
-
         // We don't want to make API calls which will not work 100%
         console.log("Empty city !!!");
-
+        $("#searchCity").addClass("bg-danger");
     } else {
+        // once there is city provided we can fire up api
+        $("#searchCity").removeClass("bg-danger");
         frenderWeather(city);  
     }
 });

@@ -12,10 +12,11 @@ img {
     height: 3vh;
 }
 
-
+/* class is needed to render busy cursos during ajax calls */
 body.wait *, body.wait
 {
-    cursor: progress !important;
+    /* important to overwrite any other potential cursos manipulations*/
+    cursor: wait !important;
 }
 
 
